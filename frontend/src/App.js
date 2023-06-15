@@ -3,20 +3,19 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [data, setData] = useState({ message: "" });
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch("/")
+    fetch("/api/hello")
       .then((res) => res.json())
-      .then((data) => setData(data));
-    console.log(data);
+      .then((data) => setMessage(data.message));
   }, []);
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>{data}</p>
+        <p>{message}</p>
       </header>
     </div>
   );

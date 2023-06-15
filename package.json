@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "py app.py && cd ./frontend && npm start",
+    "front": "cd ./frontend && npm start",
+    "start": "concurrently \"py app.py\" \"npm run front\"",
     "install": "pip install -r requirements.txt && cd ./frontend && npm install"
   },
   "author": "",
