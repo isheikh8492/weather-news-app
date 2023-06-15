@@ -1,0 +1,13 @@
+{
+  "name": "weather-news-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "py app.y && cd ./frontend && npm start",
+    "install": "pip install -r requirements.txt && cd ./frontend && npm install"
+  },
+  "author": "",
+  "license": "ISC"
+}
