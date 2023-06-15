@@ -22,7 +22,7 @@ Navigate to the project directory and set up a Python virtual environment:
 
 ```
 cd weather-news-app
-python3 -m venv venv
+python3 -m venv env
 npm install
 ```
 
