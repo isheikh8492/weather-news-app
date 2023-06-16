@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import { Row, Col } from "react-bootstrap";
 import AirQualityComponent from "./AirQualityComponent";
 import DailyTemperatureComponent from "./DailyTemperatureComponent";
 import GPTSummaryComponent from "./GPTSummaryComponent";
@@ -13,9 +14,15 @@ const Dashboard = () => {
   return (
     <div>
       <SideBar />
-      <AirQualityComponent />
-      <DailyTemperatureComponent />
-      <GPTSummaryComponent />
+      <Row>
+        <Col>
+          <GPTSummaryComponent />
+        </Col>
+        <Col>
+          <AirQualityComponent />
+          <DailyTemperatureComponent />
+        </Col>
+      </Row>
       {/* Other components, passing the location as a prop if necessary */}
     </div>
   );
