@@ -13,12 +13,14 @@ const Dashboard = () => {
 
   return (
     <div>
-      <SideBar />
       <Row>
-        <Col>
+        <Col md={1}>
+          <SideBar />
+        </Col>
+        <Col md={3}>
           <GPTSummaryComponent />
         </Col>
-        <Col>
+        <Col md={8}>
           <AirQualityComponent />
           <DailyTemperatureComponent />
         </Col>
