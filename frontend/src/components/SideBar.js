@@ -1,21 +1,26 @@
 import React from "react";
 import "./SideBar.css";
-import { FaCloudSun, FaTemperatureHigh, FaWind } from "react-icons/fa"; // import icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCloud,
+  faNewspaper,
+  faGear,
+} from "@fortawesome/free-solid-svg-icons"; // import icons
 
 function Sidebar() {
   return (
     <div className="sidebar">
       <button className="sidebar-item">
-        <FaCloudSun className="sidebar-icon" /> {/* add icon */}
-        <span className="sidebar-text">Weather</span>
+        <FontAwesomeIcon icon={faCloud} />
+        <span className="sidebar-text">Weather Conditions</span>
       </button>
       <button className="sidebar-item">
-        <FaTemperatureHigh className="sidebar-icon" /> {/* add icon */}
-        <span className="sidebar-text">Temperature</span>
+        <FontAwesomeIcon icon={faNewspaper} />
+        <span className="sidebar-text">Social Feed</span>
       </button>
       <button className="sidebar-item">
-        <FaWind className="sidebar-icon" /> {/* add icon */}
-        <span className="sidebar-text">Air Quality</span>
+        <FontAwesomeIcon icon={faGear} />
+        <span className="sidebar-text">Settings</span>
       </button>
     </div>
   );
