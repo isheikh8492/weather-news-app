@@ -1,19 +1,47 @@
 import React, { useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function SearchBar({ className }) {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
-  const searchWeather = () => {
+  const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
+
+  const fetchGeoCode = async (location) => {
+    const response = await fetch(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+        location
+      )}.json?access_token=${mapboxToken}`
+    );
+
+    const data = await response.json();
+    if (data.features && data.features.length > 0) {
+      return data.features[0].center;
+    } else {
+      return null;
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const searchWeather = async () => {
     fetch("/weather?location=" + encodeURIComponent(searchQuery))
       .then((response) => response.json())
       .then((data) => {
         navigate("/dashboard/" + encodeURIComponent(data.location));
       });
+    const coords = await fetchGeoCode(searchQuery);
+    if (coords) {
+      const [longitude, latitude] = coords;
+      console.log(longitude, latitude);
+    } else {
+      console.log("No matching location found");
+    }
   };
 
   return (
@@ -25,8 +53,15 @@ function SearchBar({ className }) {
             type="text"
             value={searchQuery}
             placeholder="Enter City Name and/or Country Name"
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleInputChange}
           />
+          <div>
+            {suggestions.map((suggestion, index) => (
+              <div key={index} onClick={() => setSearchQuery(suggestion)}>
+                {suggestion}
+              </div>
+            ))}
+          </div>
         </Col>
         <Col
           md={4}
@@ -40,4 +75,5 @@ function SearchBar({ className }) {
     </Form>
   );
 }
+
 export default SearchBar;
