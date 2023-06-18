@@ -4,7 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Header from "./components/Header";
 import SearchBar from "./components/SearchBar";
-import { BrowserRouter as Router, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  useLocation,
+  Routes,
+  Route,
+} from "react-router-dom";
 import WeatherDashboard from "./components/WeatherDashboard";
 
 function App() {
@@ -22,7 +27,13 @@ function App() {
           <SearchBar />
         </Container>
       )}
-      {!isHomePage && <WeatherDashboard />}
+      {!isHomePage && (
+        <div>
+          <Routes>
+            <Route path="/dashboard/:location" element={<WeatherDashboard />} />
+          </Routes>
+        </div>
+      )}
     </div>
   );
 }
