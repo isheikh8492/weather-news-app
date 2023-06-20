@@ -15,12 +15,15 @@ const WeatherDashboard = () => {
         <Col md={1}>
           <SideBar />
         </Col>
-        <Col md={3}>
+        <Col md={5}>
           <GPTSummaryComponent />
         </Col>
-        <Col md={8}>
-          <AirQualityComponent />
+        <Col md={6}>
           <DailyTemperatureComponent
+            latitude={coordinates.latitude}
+            longitude={coordinates.longitude}
+          />
+          <AirQualityComponent
             latitude={coordinates.latitude}
             longitude={coordinates.longitude}
           />

@@ -4,8 +4,6 @@ import { Chart as ChartJS } from "chart.js/auto";
 import "chartjs-adapter-moment";
 
 const DailyTemperatureComponent = (coordinates) => {
-  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-
   const getFormattedDate = (date) => {
     let year = date.getFullYear();
     let month = (1 + date.getMonth()).toString().padStart(2, "0");
