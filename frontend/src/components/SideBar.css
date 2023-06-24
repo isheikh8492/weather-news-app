@@ -26,17 +26,17 @@
 }
 
 .sidebar-item:hover {
-  max-width: 200px; /* increase the maximum width when hovered */
+  max-width: 200px;
 }
 
-.sidebar-icon {
+/* .sidebar-icon {
   margin-right: 10px; 
-}
+} */
 
 .sidebar-text {
   display: none;
 }
 
-.sidebar-item:hover .sidebar-text {
+/* .sidebar-item:hover .sidebar-text {
   display: inline;
-}
+} */

@@ -1,7 +1,12 @@
 import React from "react";
+import "./CitySummary.css";
 
-const citySummary = () => {
-  return <div>citySummary</div>;
+const CitySummary = () => {
+  return (
+    <div className="summary-container">
+      <div className="summary-box">City Summary</div>
+    </div>
+  );
 };
 
-export default citySummary;
+export default CitySummary;

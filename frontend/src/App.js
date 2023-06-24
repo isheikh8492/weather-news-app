@@ -10,7 +10,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import WeatherDashboard from "./components/WeatherDashboard";
+import Dashboard from "./components/Dashboard";
 
 // Create the context
 export const WeatherDataContext = createContext();
@@ -64,7 +64,7 @@ function App() {
       {!isHomePage && (
         <div>
           <Routes>
-            <Route path="/dashboard" element={<WeatherDashboard />} />{" "}
+            <Route path="/dashboard" element={<Dashboard />} />{" "}
           </Routes>
         </div>
       )}

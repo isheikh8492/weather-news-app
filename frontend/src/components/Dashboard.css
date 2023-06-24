@@ -1,0 +1,53 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;  /* Prevents scrolling */
+}
+
+.grid-container {
+  display: grid;
+  height: 100%;  
+  width: 100%;  
+  gap: 10px;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: 
+    "item1 item4 item5"
+    "item2 item4 item5"
+    "item6 item6 item5";
+  box-sizing: border-box;
+  padding: 10px;  /* Adds some spacing around the edges */
+}
+
+.grid-item {
+  background: #4CAF50;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.item1 {
+  grid-area: item1;
+}
+
+.item2 {
+  grid-area: item2;
+}
+
+.item3 {
+  grid-area: item3;
+}
+
+.item4 {
+  grid-area: item4;
+}
+
+.item5 {
+  grid-area: item5;
+}
+
+.item6 {
+  grid-area: item6;
+}
