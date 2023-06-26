@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import "./css/fonts.css";
 import Header from "./components/Header";
 import SearchBar from "./components/SearchBar";
 import {

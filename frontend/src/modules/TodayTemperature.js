@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./TodayTemperature.css";
 import { weatherTable } from "../dataset/WeatherCode";
+import CloudImg from "../assets/cloud.png";
+import MinImg from "../assets/min-temp.png";
+import MaxImg from "../assets/max-temp.png";
+import SunriseImg from "../assets/sunrise.png";
+import SunsetImg from "../assets/sunset.png";
 
 const TodayTemperature = ({
   latitude,
@@ -48,6 +53,13 @@ const TodayTemperature = ({
     return iconString;
   };
 
+  const convertTime = (time) => {
+    const date = new Date(time);
+    const options = { hour: "2-digit", minute: "2-digit", hour12: true };
+    const strTime = date.toLocaleTimeString("en-US", options);
+    return strTime;
+  };
+
   useEffect(() => {
     const loadIcon = async () => {
       try {
@@ -65,7 +77,7 @@ const TodayTemperature = ({
     <div className="summary-container">
       <div className="summary-box">
         <div className="currentTempDetails">
-          <img src={icon} alt={weatherIcon(weathercode)} />
+          <img className="icon" src={icon} alt={weatherIcon(weathercode)} />
           <p className="current-temperature">
             {temperature}
             {temperatureUnit}
@@ -73,19 +85,46 @@ const TodayTemperature = ({
           <p className="cloudcover-attribute">{weathercodeDescription}</p>
         </div>
         <p className="temp-attribute">
-          Cloudiness: {cloudiness}
-          {cloudcoverUnit}
+          <img className="daily-attribute" src={CloudImg} alt="cloudiness" />
+          <span className="temp-text">
+            Cloudiness: {cloudiness}
+            {cloudcoverUnit}
+          </span>
         </p>
         <p className="temp-attribute">
-          Min: {min}
-          {temperatureUnit}
+          <img
+            className="daily-attribute-temp"
+            src={MinImg}
+            alt="Minimum temperature"
+          />
+          <span className="temp-text">
+            Min: {min}
+            {temperatureUnit}
+          </span>
         </p>
         <p className="temp-attribute">
-          Max: {max}
-          {temperatureUnit}
+          <img
+            className="daily-attribute-temp"
+            src={MaxImg}
+            alt="Maximum temperature"
+          />
+          <span className="temp-text">
+            Max: {max}
+            {temperatureUnit}
+          </span>
         </p>
-        <p className="temp-attribute">Sunset: {sunset}</p>
-        <p className="temp-attribute">Sunrise: {sunrise}</p>
+        <p className="temp-attribute">
+          <img
+            className="daily-attribute"
+            src={SunriseImg}
+            alt="Sunrise time"
+          />
+          <span className="temp-text">Sunrise: {convertTime(sunrise)}</span>
+        </p>
+        <p className="temp-attribute">
+          <img className="daily-attribute" src={SunsetImg} alt="Sunset time" />
+          <span className="temp-text">Sunset: {convertTime(sunset)}</span>
+        </p>
       </div>
     </div>
   );

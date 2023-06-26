@@ -4,38 +4,54 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: auto; /* Enable scrolling for overflow */
+  overflow: auto;
 }
 
 .summary-box {
   text-align: center;
-  /* Additional styling */
   background-color: #333;
   padding: 20px;
   border-radius: 10px;
   color: #fff;
   display: flex;
-  flex-direction: column; /* Stack items vertically */
+  flex-direction: column;
   justify-content: center;
-  font-family: sans-serif;
-  gap: 10px; /* Creates a uniform gap between elements */
+  gap: 10px;
 }
 
 .temp-attribute {
   font-size: 20px;
   color: #6c64fb;
-  border: 1px solid #fff; /* Adds a border to the p elements */
-  border-radius: 35px; /* Rounds the corners of the p elements */
+  border: 1px solid #fff;
+  border-radius: 35px;
   padding: 5px;
   width: 100%; 
-  white-space: nowrap; /* Prevents the text from wrapping to a new line */
-  overflow: hidden; /* Hides any text that overflows the fixed width */
-  text-overflow: ellipsis; /* Adds an ellipsis (...) when the text overflows */
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.daily-attribute {
+  height: fit-content;
+  width: 25px;
+  position: absolute;
+  left: 10px;
+}
+
+.daily-attribute-temp {
+  height: fit-content;
+  width: 22px;
+  position: absolute;
+  left: 10px;
 }
 
 .temp-attribute.temperature {
   font-size: 30px;
-  color: #ff0; /* Makes the temperature text yellow */
+  color: #ff0;
 }
 
 .cloudcover-attribute {
@@ -51,4 +67,14 @@
 .currentTempDetails {
   padding: 0px;
   line-height: 0.6;
+}
+
+.temp-text {
+  align-content: center;
+  font-family: QuicksandRegular, sans-serif;
+}
+
+.icon {
+  height: 145px;
+  width: fit-content;
 }
