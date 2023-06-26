@@ -21,6 +21,7 @@ function App() {
     latitude: null,
     longitude: null,
   });
+  const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState(null);
 
   const location = useLocation();
@@ -50,24 +51,26 @@ function App() {
 
   return (
     <WeatherDataContext.Provider value={{ coordinates, setCoordinates }}>
-      <Header />
-      {error && <div>Error: {error}</div>}
-      {isHomePage && (
-        <Container className="vh-100 d-flex flex-column align-items-center justify-content-center">
-          <h1 className="app-title mb-4">Welcome to WeatherView</h1>
-          <p className="app-tagline mb-4">
-            Your one-stop destination for accurate city-wide weather updates
-          </p>
-          <SearchBar />
-        </Container>
-      )}
-      {!isHomePage && (
-        <div>
-          <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />{" "}
-          </Routes>
-        </div>
-      )}
+      <div className="App">
+        <Header />
+        {error && <div>Error: {error}</div>}
+        {isHomePage && (
+          <Container className="vh-100 d-flex flex-column align-items-center justify-content-center">
+            <h1 className="app-title mb-4">Welcome to WeatherView</h1>
+            <p className="app-tagline mb-4">
+              Your one-stop destination for accurate city-wide weather updates
+            </p>
+            <SearchBar />
+          </Container>
+        )}
+        {!isHomePage && (
+          <div>
+            <Routes>
+              <Route path="/dashboard" element={<Dashboard />} />{" "}
+            </Routes>
+          </div>
+        )}
+      </div>
     </WeatherDataContext.Provider>
   );
 }
