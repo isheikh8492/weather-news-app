@@ -57,6 +57,7 @@
 .cloudcover-attribute {
   font-size: 15px;
   color: #fff;
+  font-family: 'QuicksandRegular', sans-serif;
 }
 
 .current-temperature {
@@ -65,13 +66,13 @@
 }
 
 .currentTempDetails {
-  padding: 0px;
+  /* padding: 0px; */
   line-height: 0.6;
 }
 
 .temp-text {
   align-content: center;
-  font-family: QuicksandRegular, sans-serif;
+  font-family: 'QuicksandRegular', sans-serif;
 }
 
 .icon {

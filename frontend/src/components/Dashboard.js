@@ -7,20 +7,28 @@ import TodayTemperature from "../modules/TodayTemperature";
 import TemperatureForecast from "../modules/TemperatureForecast";
 import CitySummary from "../modules/CitySummary";
 import AirQuality from "../modules/AirQuality";
-import "./Dashboard.css";
+import "../css/components/Dashboard.css";
 
 const Dashboard = () => {
   const { coordinates } = useContext(WeatherDataContext);
   const [weatherData, setWeatherData] = useState(null);
+  const [airQualityData, setAirQualityData] = useState(null);
 
   useEffect(() => {
     fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=temperature_2m,weathercode,cloudcover,visibility,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&forecast_days=1&timezone=America%2FChicago`
+      `https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=temperature_2m,relativehumidity_2m,weathercode,surface_pressure,cloudcover,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max&forecast_days=1&timezone=America%2FChicago`
     )
       .then((response) => response.json())
       .then((data) => setWeatherData(data));
 
+    fetch(
+      `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone,uv_index&timezone=America%2FChicago`
+    )
+      .then((response) => response.json())
+      .then((data) => setAirQualityData(data));
+
     console.log(weatherData);
+    console.log(airQualityData);
   }, [coordinates]);
 
   return (
@@ -35,7 +43,23 @@ const Dashboard = () => {
         <SomeGraph />
       </div>
       <div className="grid-item item4">
-        <AirQuality />
+        <AirQuality
+          windspeed={weatherData?.hourly?.windspeed_10m[0]}
+          windspeedUnit={weatherData?.hourly_units?.windspeed_10m}
+          winddirection={weatherData?.hourly?.winddirection_10m[0]}
+          winddirectionUnit={weatherData?.hourly_units?.winddirection_10m}
+          surfacepressure={weatherData?.hourly?.surface_pressure[0]}
+          surfacepressureUnit={weatherData?.hourly_units?.surface_pressure}
+          uvindex={weatherData?.daily?.uv_index_max[0]}
+          humidity={weatherData?.hourly?.relativehumidity_2m[0]}
+          humidityUnit={weatherData?.hourly_units?.relativehumidity_2m}
+          so2={airQualityData?.hourly?.sulphur_dioxide[0]}
+          no2={airQualityData?.hourly?.nitrogen_dioxide[0]}
+          o3={airQualityData?.hourly?.ozone[0]}
+          so2Unit={airQualityData?.hourly_units?.sulphur_dioxide}
+          no2Unit={airQualityData?.hourly_units?.nitrogen_dioxide}
+          o3Unit={airQualityData?.hourly_units?.ozone}
+        />
       </div>
       <div className="grid-item item5">
         <TodayTemperature

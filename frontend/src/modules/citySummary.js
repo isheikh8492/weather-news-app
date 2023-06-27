@@ -1,5 +1,5 @@
 import React from "react";
-import "./CitySummary.css";
+import "../css/modules/CitySummary.css";
 
 const CitySummary = () => {
   return (

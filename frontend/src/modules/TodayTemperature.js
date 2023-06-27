@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./TodayTemperature.css";
+import "../css/modules/TodayTemperature.css";
 import { weatherTable } from "../dataset/WeatherCode";
 import CloudImg from "../assets/cloud.png";
 import MinImg from "../assets/min-temp.png";
@@ -71,7 +71,7 @@ const TodayTemperature = ({
       }
     };
     loadIcon();
-  }, []);
+  });
 
   return (
     <div className="summary-container">
