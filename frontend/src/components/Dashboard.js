@@ -40,7 +40,11 @@ const Dashboard = () => {
         <CitySummary />
       </div>
       <div className="grid-item item2">
-        <TodayTemperatureGraph />
+        <TodayTemperatureGraph
+          time={weatherData?.hourly?.time.slice(0, 25)}
+          temperature={weatherData?.hourly?.temperature_2m.slice(0, 25)}
+          temperatureUnit={weatherData?.hourly_units?.temperature_2m}
+        />
       </div>
       <div className="grid-item item4">
         <AirQuality

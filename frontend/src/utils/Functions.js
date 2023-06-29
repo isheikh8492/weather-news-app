@@ -191,3 +191,13 @@ export const convertDayName = (time) => {
   const dayName = date.toLocaleDateString("en-US", options);
   return dayName;
 };
+
+export const convertGraphTime = (time) => {
+  const date = new Date(time);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const adjustedHours = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours; // Converts to 12 hour format
+  const amPm = hours >= 12 ? "PM" : "AM";
+
+  return `${adjustedHours}${minutes === 0 ? "" : `:${minutes}`}${amPm}`;
+};
