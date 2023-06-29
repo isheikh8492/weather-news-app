@@ -26,7 +26,9 @@ export const weatherTable = {
   84: "Moderate sleet showers",
   85: "Slight snow showers",
   86: "Heavy snow showers",
-  "95 *": "Slight or moderate thunderstorm",
+  95: "Slight thunderstorm",
+  "95 *": "Moderate thunderstorm",
   96: "Thunderstorm with slight hail",
+  99: "Thunderstorm with heavy hail",
   "99 *": "Thunderstorm with heavy hail",
 };

@@ -1,5 +1,6 @@
 html, body, #root, .App, .grid-row, .grid-column {
   height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   overflow-y: hidden;
@@ -22,7 +23,6 @@ html, body, #root, .App, .grid-row, .grid-column {
 .grid-item {
   background: #4CAF50;
   border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 20px;
   font-size: 30px;
   text-align: center;
 }

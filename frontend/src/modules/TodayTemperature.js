@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../css/modules/TodayTemperature.css";
-import { weatherTable } from "../dataset/WeatherCode";
+import { weatherTable } from "../utils/WeatherCode";
 import CloudImg from "../assets/cloud.png";
 import MinImg from "../assets/min-temp.png";
 import MaxImg from "../assets/max-temp.png";
 import SunriseImg from "../assets/sunrise.png";
 import SunsetImg from "../assets/sunset.png";
+import { weatherIcon, convertTime } from "../utils/Functions";
 
 const TodayTemperature = ({
   latitude,
@@ -22,43 +23,6 @@ const TodayTemperature = ({
 }) => {
   const weathercodeDescription = weatherTable[weathercode];
   const [icon, setIcon] = useState(null);
-
-  const weatherIcon = (weathercode) => {
-    let iconString = "";
-    if (weathercode >= 0 && weathercode <= 1) {
-      iconString = "clear-day";
-    } else if (weathercode === 2) {
-      iconString = "cloudy";
-    } else if (weathercode === 3) {
-      iconString = "overcast-day";
-    } else if (weathercode >= 4 && weathercode < 51) {
-      iconString = "fog-day";
-    } else if (weathercode >= 51 && weathercode <= 57) {
-      iconString = "drizzle";
-    } else if (weathercode >= 58 && weathercode <= 67) {
-      iconString = "rainy";
-    } else if (weathercode >= 68 && weathercode <= 79) {
-      iconString = "snow";
-    } else if (weathercode >= 80 && weathercode <= 82) {
-      iconString = "rainy";
-    } else if (weathercode >= 83 && weathercode <= 86) {
-      iconString = "sleet";
-    } else if (weathercode === "95 *") {
-      iconString = "thunderstorm-day";
-    } else if (weathercode === "99 *") {
-      iconString = "thunderstorm-day-snow";
-    } else {
-      iconString = "thunderstorm-day-rain";
-    }
-    return iconString;
-  };
-
-  const convertTime = (time) => {
-    const date = new Date(time);
-    const options = { hour: "2-digit", minute: "2-digit", hour12: true };
-    const strTime = date.toLocaleTimeString("en-US", options);
-    return strTime;
-  };
 
   useEffect(() => {
     const loadIcon = async () => {

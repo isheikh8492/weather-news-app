@@ -12,32 +12,59 @@
   padding:20px;
   border-radius:10px;
   color:#fff;
+  height: 100%;
 }
 
 .weatherCardContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  flex-wrap: nowrap;
+  align-items: center;
+  height: fit-content;
 }
 
 .weatherCard {
-  /* flex: 1 0 12.5%; 1/8 = 12.5% for each card */
-  background-color: #fff;
-  padding: 10px;
-  color: #000;
-  text-align: center;
+  background-color: #333;
+  color: #fff;
   font-size: x-small;
   border-radius: 10px;
-  width: 50px;
-  height: 90px;
+  padding: 10px;
+  margin: 0px 5px;
+  width: 135px;
+  height: 175px;
+  font-family: 'QuicksandRegular', sans-serif;
+  line-height: 0.9;
+  display: flex;
+  flex-direction: column;
 }
 
 .weatherCard-text {
-  font-size: 15px;
+  font-size: 11px;
+  padding: 1px;
 }
 
 .control-arrow {
   opacity: 1; /* Make arrows fully visible */
   filter: invert(100%); /* Invert color to white */
+}
+
+.cardImg {
+  height: 48px;
+  width: fit-content;
+}
+
+.small-spacing {
+  line-height: 1.1;
+}
+
+.weatherCard-text-weather {
+  flex: 0 0 15px;
+}
+
+.larger {
+  font-size: 2.0em;
+}
+
+.little-larger {
+  font-size: 1.5em;
 }

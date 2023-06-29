@@ -16,7 +16,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=temperature_2m,relativehumidity_2m,weathercode,surface_pressure,cloudcover,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max&forecast_days=1&timezone=America%2FChicago`
+      `https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=temperature_2m,relativehumidity_2m,weathercode,surface_pressure,cloudcover,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max&forecast_days=7&timezone=America%2FChicago`
     )
       .then((response) => response.json())
       .then((data) => setWeatherData(data));
@@ -77,7 +77,12 @@ const Dashboard = () => {
         />
       </div>
       <div className="grid-item item6">
-        <TemperatureForecast />
+        <TemperatureForecast
+          time={weatherData?.hourly?.time}
+          temperature={weatherData?.hourly?.temperature_2m}
+          temperatureUnit={weatherData?.hourly_units?.temperature_2m}
+          weathercode={weatherData?.hourly?.weathercode}
+        />
       </div>
     </div>
   );
