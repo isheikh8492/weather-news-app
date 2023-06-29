@@ -20,24 +20,26 @@ const TemperatureForecast = ({
 
   useEffect(() => {
     const loadIcons = async () => {
-      const weatherCards = await Promise.all(
-        time.map(async (t, index) => {
-          if (index % 3 === 0) {
-            const weatherType = weatherTable[weathercode[index]];
-            const icon = await getWeatherIcon(weathercode[index]);
-            return {
-              time: convertTime(t),
-              date: convertDate(t),
-              day: convertDayName(t),
-              temperature: `${temperature[index]} ${temperatureUnit}`,
-              weather: weatherType,
-              weatherIcon: icon,
-            };
-          }
-          return null;
-        })
-      );
-      setData(weatherCards.filter((item) => item !== null));
+      if (weathercode !== undefined) {
+        const weatherCards = await Promise.all(
+          time.map(async (t, index) => {
+            if (index % 3 === 0) {
+              const weatherType = weatherTable[weathercode[index]];
+              const icon = await getWeatherIcon(weathercode[index]);
+              return {
+                time: convertTime(t),
+                date: convertDate(t),
+                day: convertDayName(t),
+                temperature: `${temperature[index]} ${temperatureUnit}`,
+                weather: weatherType,
+                weatherIcon: icon,
+              };
+            }
+            return null;
+          })
+        );
+        setData(weatherCards.filter((item) => item !== null));
+      }
     };
 
     loadIcons();

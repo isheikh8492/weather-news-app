@@ -13,12 +13,10 @@
   text-align: center;
   /* Additional styling */
   background-color:#333;
-    padding:20px;
     border-radius:10px;
     color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    /* display:flex; */
+
     font-size:40px;
     font-family:sans-serif;
 }

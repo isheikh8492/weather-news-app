@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/modules/SomeGraph.css";
+import "../css/modules/TodayTemperatureGraph.css";
 
 const SomeGraph = () => {
   return (

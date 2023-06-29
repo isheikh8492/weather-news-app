@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRunOnce, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import SideBar from "./SideBar";
 import { WeatherDataContext } from "../App";
-import SomeGraph from "../modules/SomeGraph";
+import TodayTemperatureGraph from "../modules/TodayTemperatureGraph";
 import TodayTemperature from "../modules/TodayTemperature";
 import TemperatureForecast from "../modules/TemperatureForecast";
 import CitySummary from "../modules/CitySummary";
@@ -40,7 +40,7 @@ const Dashboard = () => {
         <CitySummary />
       </div>
       <div className="grid-item item2">
-        <SomeGraph />
+        <TodayTemperatureGraph />
       </div>
       <div className="grid-item item4">
         <AirQuality
