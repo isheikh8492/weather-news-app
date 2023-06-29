@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../css/modules/TemperatureForecast.css";
+import { roundTemperature } from "../utils/Functions";
 import {
   convertTime,
   getWeatherIcon,
@@ -30,7 +31,9 @@ const TemperatureForecast = ({
                 time: convertTime(t),
                 date: convertDate(t),
                 day: convertDayName(t),
-                temperature: `${temperature[index]} ${temperatureUnit}`,
+                temperature: `${roundTemperature(
+                  temperature[index]
+                )}${temperatureUnit}`,
                 weather: weatherType,
                 weatherIcon: icon,
               };

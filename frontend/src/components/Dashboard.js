@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useRunOnce, useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
 import SideBar from "./SideBar";
 import { WeatherDataContext } from "../App";
 import TodayTemperatureGraph from "../modules/TodayTemperatureGraph";
@@ -7,6 +6,7 @@ import TodayTemperature from "../modules/TodayTemperature";
 import TemperatureForecast from "../modules/TemperatureForecast";
 import CitySummary from "../modules/CitySummary";
 import AirQuality from "../modules/AirQuality";
+import TimeCoordinates from "../modules/TimeCoordinates";
 import "../css/components/Dashboard.css";
 
 const Dashboard = () => {
@@ -16,7 +16,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=temperature_2m,relativehumidity_2m,weathercode,surface_pressure,cloudcover,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max&forecast_days=7&timezone=America%2FChicago`
+      `https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,weathercode,surface_pressure,cloudcover,visibility,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max&forecast_days=7&timezone=America%2FChicago`
     )
       .then((response) => response.json())
       .then((data) => setWeatherData(data));
@@ -38,6 +38,14 @@ const Dashboard = () => {
       </div>
       <div className="grid-item item1">
         <CitySummary />
+      </div>
+      <div className="grid-item item7">
+        <TimeCoordinates
+          latitude={coordinates.latitude}
+          longitude={coordinates.longitude}
+          cityName="Chicago"
+          cityCountry="US"
+        />
       </div>
       <div className="grid-item item2">
         <TodayTemperatureGraph
@@ -63,12 +71,12 @@ const Dashboard = () => {
           so2Unit={airQualityData?.hourly_units?.sulphur_dioxide}
           no2Unit={airQualityData?.hourly_units?.nitrogen_dioxide}
           o3Unit={airQualityData?.hourly_units?.ozone}
+          visibility={weatherData?.hourly?.visibility[0]}
+          visibilityUnit={weatherData?.hourly_units?.visibility}
         />
       </div>
       <div className="grid-item item5">
         <TodayTemperature
-          latitude={coordinates.latitude}
-          longitude={coordinates.longitude}
           min={weatherData?.daily?.temperature_2m_min[0]}
           max={weatherData?.daily?.temperature_2m_max[0]}
           cloudiness={weatherData?.hourly?.cloudcover[0]}

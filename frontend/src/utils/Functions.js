@@ -133,9 +133,12 @@ export const weatherIcon = (weathercode) => {
 
 export const convertTime = (time) => {
   const date = new Date(time);
-  const options = { hour: "2-digit", minute: "2-digit", hour12: true };
-  const strTime = date.toLocaleTimeString("en-US", options);
-  return strTime;
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const adjustedHours = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours;
+  const amPm = hours >= 12 ? "PM" : "AM";
+
+  return `${adjustedHours}${minutes === 0 ? "" : `:${minutes}`} ${amPm}`;
 };
 
 export const getWeatherIcon = async (weathercode) => {
@@ -200,4 +203,34 @@ export const convertGraphTime = (time) => {
   const amPm = hours >= 12 ? "PM" : "AM";
 
   return `${adjustedHours}${minutes === 0 ? "" : `:${minutes}`}${amPm}`;
+};
+
+export const convertLocalTime = (time) => {
+  const date = new Date(time);
+
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours %= 12;
+  hours = hours ? (hours < 10 ? ` ${hours}` : hours) : 12; // the hour '0' should be '12'
+  const minutesStr = minutes < 10 ? `0${minutes}` : minutes;
+
+  return `${hours}:${minutesStr} ${ampm}`;
+};
+
+export const formatDate = (date) => {
+  const suffixes = ["th", "st", "nd", "rd"];
+  const day = date.getDate();
+  const relevantDigits = day < 30 ? day % 20 : day % 30;
+  const suffix = relevantDigits <= 3 ? suffixes[relevantDigits] : suffixes[0];
+  return `${date.toLocaleDateString("en-US", {
+    weekday: "long",
+  })}, ${day}${suffix} ${date.toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  })}`;
+};
+
+export const roundTemperature = (temperature) => {
+  return Math.round(temperature);
 };
