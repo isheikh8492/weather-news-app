@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { Navbar } from "react-bootstrap";
-import "./Header.css";
+import "../css/components/Header.css";
 
 const Header = () => {
   const location = useLocation();
