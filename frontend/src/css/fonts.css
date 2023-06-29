@@ -1,0 +1,13 @@
+
+@font-face {
+    font-family: 'QuicksandRegular';
+    src: local('QuicksandRegular'),
+         url('../fonts/Quicksand-Regular.ttf') format('truetype');
+};
+
+
+@font-face {
+    font-family: 'QuicksandBold';
+    src: local('QuicksandBold'),
+         url('../fonts/Quicksand-Bold.ttf') format('truetype');
+};

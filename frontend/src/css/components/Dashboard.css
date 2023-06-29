@@ -1,0 +1,52 @@
+html, body, #root, .App, .grid-row, .grid-column {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: hidden;
+}
+
+.grid-container {
+  display: grid;
+  height: 100%;
+  gap: 10px;
+  grid-template-columns: 0.5fr 3fr 3fr 2.5fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas: 
+    "sidebar item1 item4 item5"
+    "sidebar item2 item4 item5"
+    "sidebar item6 item6 item5";
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.grid-item {
+  background: #4CAF50;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  font-size: 30px;
+  text-align: center;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.item1 {
+  grid-area: item1;
+}
+
+.item2 {
+  grid-area: item2;
+}
+
+.item4 {
+  grid-area: item4;
+}
+
+.item5 {
+  grid-area: item5;
+}
+
+.item6 {
+  grid-area: item6;
+}

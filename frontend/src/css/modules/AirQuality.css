@@ -1,0 +1,69 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+html{
+  background-color:#eee;
+}
+.container{
+  /* margin: 20px auto; */
+  width:100%;
+  height:100%;
+  display:grid;
+  grid-template-columns: 200px 200px;
+  grid-row: auto auto;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  .box{
+    background-color:#333;
+    padding:20px;
+    border-radius:10px;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:40px;
+    font-family:sans-serif;
+  }
+
+}
+
+.airquality-text {
+  font-size: 14px;
+  font-family: 'QuicksandRegular', sans-serif;
+  font-weight: bold;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.4;
+}
+
+.windImg {
+  width: fit-content;
+  height: 40px;
+}
+
+.pressureImg {
+  width: fit-content;
+  height: 38px;
+}
+
+.humidityImg {
+  width: fit-content;
+  height: 37px;
+}
+
+.airqualityImg {
+  width: fit-content;
+  height: 35px;
+}
+
+.airquality-text-smaller {
+  font-size: 14px;
+  font-family: 'QuicksandRegular', sans-serif;
+  padding: 0%;
+  line-height: normal;
+}

@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .app-title {
@@ -46,4 +51,8 @@
   color: #6c757d;
   background-color: #fff;
   border-color: #7a8794;
+}
+
+.b {
+  font-weight: bold;
 }
