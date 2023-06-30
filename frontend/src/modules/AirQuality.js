@@ -33,7 +33,7 @@ const AirQuality = ({
   visibilityUnit,
 }) => {
   return (
-    <div className="container">
+    <div className="airquality-container">
       <div className="box">
         <img className="windImg" src={windImg} alt="wind" />
         <p>

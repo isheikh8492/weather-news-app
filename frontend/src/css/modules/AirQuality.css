@@ -6,16 +6,20 @@
 html{
   background-color:#eee;
 }
-.container{
-  /* margin: 20px auto; */
+
+.airquality-container {
   width:100%;
   height:100%;
-  display:grid;
+  display: grid;
+  justify-content: space-between;
   grid-template-rows: repeat(2, 1fr); 
   grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
-  .box{
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.box{
+    flex: 1;
     background-color:#333;
     /* padding:20px; */
     border-radius:10px;
@@ -26,20 +30,14 @@ html{
     font-size:37px;
     font-family:sans-serif;
     padding: 10px;
+  flex-direction: column;
+  line-height: 0.4;
   }
-
-}
 
 .airquality-text {
   font-size: 14px;
   font-family: 'QuicksandRegular', sans-serif;
   font-weight: bold;
-}
-
-.box {
-  display: flex;
-  flex-direction: column;
-  line-height: 0.4;
 }
 
 .windImg {
