@@ -18,6 +18,8 @@ const TodayTemperature = ({
   weathercode,
   cloudcoverUnit,
   temperatureUnit,
+  apparentTemperature,
+  apparentTemperatureUnit,
 }) => {
   const weathercodeDescription = weatherTable[weathercode];
   const [icon, setIcon] = useState(null);
@@ -36,15 +38,21 @@ const TodayTemperature = ({
   });
 
   return (
-    <div className="summary-container">
-      <div className="summary-box">
+    <div className="daily-summary-container">
+      <div className="daily-summary-box">
         <div className="currentTempDetails">
           <img className="icon" src={icon} alt={weatherIcon(weathercode)} />
           <p className="current-temperature">
             {roundTemperature(temperature)}
             {temperatureUnit}
           </p>
-          <p className="cloudcover-attribute">{weathercodeDescription}</p>
+          <p className="cloudcover-attribute">
+            {weathercodeDescription}{" "}
+            <span className="b">
+              (Feels Like {roundTemperature(apparentTemperature)}
+              {apparentTemperatureUnit})
+            </span>
+          </p>
         </div>
         <p className="temp-attribute">
           <img className="daily-attribute" src={CloudImg} alt="cloudiness" />

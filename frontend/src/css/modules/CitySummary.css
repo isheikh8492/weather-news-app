@@ -1,22 +1,21 @@
-.summary-container {
+.city-summary-box {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.summary-box {
-  width: 100%; /* Box will occupy the entire width of the container */
-  text-align: center;
+  overflow: hidden;
   /* Additional styling */
   background-color:#333;
-    padding:20px;
-    border-radius:10px;
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:40px;
-    font-family:sans-serif;
+  border-radius:10px;
+  padding: 5px; 
+  color: white;
+  text-align: justify;
+  font-size: medium;
 }
+
+.city-summary-text {
+  font-family: 'QuicksandRegular', sans-serif;
+  vertical-align: middle;
+  position: relative;
+  margin: auto;
+  height: 100%;
+}
+

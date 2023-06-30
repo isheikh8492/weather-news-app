@@ -234,3 +234,11 @@ export const formatDate = (date) => {
 export const roundTemperature = (temperature) => {
   return Math.round(temperature);
 };
+
+export const getCurrentLocalIndex = (timeData) => {
+  const now = new Date();
+  const localDateTime = now.toISOString().slice(0, 16);
+  const closestTimeIndex = timeData.findIndex((time) => time >= localDateTime);
+  if (closestTimeIndex === -1) return timeData.length - 1;
+  return closestTimeIndex;
+};
