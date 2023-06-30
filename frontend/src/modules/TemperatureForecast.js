@@ -61,6 +61,7 @@ const TemperatureForecast = ({
       showStatus={false}
       showThumbs={false}
       showIndicators={false}
+      className="carousel-slider"
     >
       {slides.map((slide, i) => (
         <div key={i} className="weatherCardContainer">
