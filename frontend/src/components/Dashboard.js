@@ -44,9 +44,6 @@ const Dashboard = () => {
 
   return (
     <div className="grid-container">
-      <div className="grid-item sidebar">
-        <SideBar />
-      </div>
       <div className="grid-item item1">
         <CitySummary
           coordinates={coordinates}

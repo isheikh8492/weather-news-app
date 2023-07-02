@@ -12,6 +12,9 @@ import {
   Route,
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
+import Social from "./components/Social";
+import SideBar from "./components/SideBar";
+import Settings from "./components/Settings";
 
 // Create the context
 export const WeatherDataContext = createContext();
@@ -53,7 +56,9 @@ function App() {
   return (
     <WeatherDataContext.Provider value={{ coordinates, setCoordinates }}>
       <div className="App">
-        <Header />
+        <div className="app-header">
+          <Header />
+        </div>
         {error && <div>Error: {error}</div>}
         {isHomePage && (
           <Container className="vh-100 d-flex flex-column align-items-center justify-content-center">
@@ -65,10 +70,17 @@ function App() {
           </Container>
         )}
         {!isHomePage && (
-          <div>
-            <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />{" "}
-            </Routes>
+          <div className="app-div max-height">
+            <div className="app-sidebar">
+              <SideBar />
+            </div>
+            <div className="app-component max-height">
+              <Routes>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/social" element={<Social />} />
+                <Route path="/settings" element={<Settings />} />
+              </Routes>
+            </div>
           </div>
         )}
       </div>

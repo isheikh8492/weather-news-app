@@ -5,23 +5,30 @@ import {
   faCloud,
   faNewspaper,
   faGear,
-} from "@fortawesome/free-solid-svg-icons"; // import icons
+} from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 function Sidebar() {
   return (
     <div className="sidebar">
-      <button className="sidebar-item">
-        <FontAwesomeIcon icon={faCloud} />
-        <span className="sidebar-text">Weather Conditions</span>
-      </button>
-      <button className="sidebar-item">
-        <FontAwesomeIcon icon={faNewspaper} />
-        <span className="sidebar-text">Social Feed</span>
-      </button>
-      <button className="sidebar-item">
-        <FontAwesomeIcon icon={faGear} />
-        <span className="sidebar-text">Settings</span>
-      </button>
+      <Link to="/dashboard" className="sidebar-item">
+        <button className="sidebar-item">
+          <FontAwesomeIcon icon={faCloud} />
+          <span className="sidebar-text">Weather Conditions</span>
+        </button>
+      </Link>
+      <Link to="/social" className="sidebar-item">
+        <button className="sidebar-item">
+          <FontAwesomeIcon icon={faNewspaper} />
+          <span className="sidebar-text">Social Feed</span>
+        </button>
+      </Link>
+      <Link to="/settings" className="sidebar-item">
+        <button className="sidebar-item">
+          <FontAwesomeIcon icon={faGear} />
+          <span className="sidebar-text">Settings</span>
+        </button>
+      </Link>
     </div>
   );
 }

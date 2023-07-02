@@ -1,10 +1,12 @@
 .App {
   text-align: center;
   background-color: #fff;
-  margin: 0;
   padding: 0;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 0.1fr 11fr;
+  /* overflow: hidden; */
 }
 
 .app-title {
@@ -55,4 +57,25 @@
 
 .b {
   font-weight: bold;
+}
+
+.app-div {
+  display: grid;
+  grid-template-areas: "sidebar component";
+  grid-template-columns: 0.1fr 10fr;
+  height: 100%;
+}
+
+.app-sidebar {
+  margin: 10px;
+  width: 50px;
+  grid-area: sidebar;
+}
+
+.app-component {
+  height: 100%; 
+}
+
+.max-height {
+  height: 100%;
 }
