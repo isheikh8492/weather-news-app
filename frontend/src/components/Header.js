@@ -8,7 +8,7 @@ const Header = () => {
   const isHomePage = location.pathname === "/";
 
   return (
-    <div>
+    <>
       {!isHomePage && (
         <Navbar
           id="searchNavbar"
@@ -18,7 +18,7 @@ const Header = () => {
           <SearchBar />
         </Navbar>
       )}
-    </div>
+    </>
   );
 };
 

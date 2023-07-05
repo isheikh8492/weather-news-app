@@ -6,11 +6,9 @@ import MinImg from "../assets/min-temp.png";
 import MaxImg from "../assets/max-temp.png";
 import SunriseImg from "../assets/sunrise.png";
 import SunsetImg from "../assets/sunset.png";
-import { weatherIcon, convertTime } from "../utils/Functions";
+import { weatherIcon, convertTime, roundTemperature } from "../utils/Functions";
 
 const TodayTemperature = ({
-  latitude,
-  longitude,
   min,
   max,
   cloudiness,
@@ -20,6 +18,8 @@ const TodayTemperature = ({
   weathercode,
   cloudcoverUnit,
   temperatureUnit,
+  apparentTemperature,
+  apparentTemperatureUnit,
 }) => {
   const weathercodeDescription = weatherTable[weathercode];
   const [icon, setIcon] = useState(null);
@@ -38,15 +38,21 @@ const TodayTemperature = ({
   });
 
   return (
-    <div className="summary-container">
-      <div className="summary-box">
+    <div className="daily-summary-container">
+      <div className="daily-summary-box">
         <div className="currentTempDetails">
           <img className="icon" src={icon} alt={weatherIcon(weathercode)} />
           <p className="current-temperature">
-            {temperature}
+            {roundTemperature(temperature)}
             {temperatureUnit}
           </p>
-          <p className="cloudcover-attribute">{weathercodeDescription}</p>
+          <p className="cloudcover-attribute">
+            {weathercodeDescription}{" "}
+            <span className="b">
+              (Feels Like {roundTemperature(apparentTemperature)}
+              {apparentTemperatureUnit})
+            </span>
+          </p>
         </div>
         <p className="temp-attribute">
           <img className="daily-attribute" src={CloudImg} alt="cloudiness" />
@@ -62,7 +68,7 @@ const TodayTemperature = ({
             alt="Minimum temperature"
           />
           <span className="temp-text">
-            Min: {min}
+            Min: {roundTemperature(min)}
             {temperatureUnit}
           </span>
         </p>
@@ -73,7 +79,7 @@ const TodayTemperature = ({
             alt="Maximum temperature"
           />
           <span className="temp-text">
-            Max: {max}
+            Max: {roundTemperature(max)}
             {temperatureUnit}
           </span>
         </p>
