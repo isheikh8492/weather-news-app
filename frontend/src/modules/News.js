@@ -8,7 +8,7 @@ const News = () => {
 
   const fetchNews = async () => {
     const response = await axios.get(
-      `https://newsapi.org/v2/everything?q=chicago%20AND%20weather&sortBy=relevancy,publishedDate&apiKey=71fc84eea43c47ee8ddd45c7ccad89aa`
+      `https://newsapi.org/v2/everything?q=chicago%20AND%20weather&sortBy=relevancy,publishedDate&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
     );
     return response.data.articles;
   };
