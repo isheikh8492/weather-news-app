@@ -1,23 +1,16 @@
-html, body, #root, .App, .grid-row, .grid-column {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-y: hidden;
-}
-
 .grid-container {
   display: grid;
   height: 100%;
-  gap: 10px;
-  grid-template-columns: 0.5fr 3fr 3fr 2.5fr;
-  grid-template-rows: auto auto auto;
+  gap: 5px;
+  grid-template-columns: 3fr 3fr 2.5fr;
+  grid-template-rows: auto auto auto auto;
   grid-template-areas: 
-    "sidebar item1 item4 item5"
-    "sidebar item2 item4 item5"
-    "sidebar item6 item6 item5";
+    "item7 item1 item5"
+    "item2 item4 item5"
+    "item2 item4 item5"
+    "item6 item6 item5";
   box-sizing: border-box;
-  padding: 5px;
+  padding: 8px;
 }
 
 .grid-item {
@@ -26,11 +19,6 @@ html, body, #root, .App, .grid-row, .grid-column {
   font-size: 30px;
   text-align: center;
 }
-
-.sidebar {
-  grid-area: sidebar;
-}
-
 .item1 {
   grid-area: item1;
 }
@@ -49,4 +37,8 @@ html, body, #root, .App, .grid-row, .grid-column {
 
 .item6 {
   grid-area: item6;
+}
+
+.item7 {
+  grid-area: item7;
 }

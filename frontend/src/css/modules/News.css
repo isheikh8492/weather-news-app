@@ -1,0 +1,87 @@
+.app-component {
+  overflow: hidden;
+}
+
+.app-sidebar {
+  padding: 8px;
+}
+
+.carousel {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carousel-img {
+  width: 25%;
+}
+
+.carousel-img img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.carousel-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 75%;
+  box-sizing: border-box;
+}
+
+.article-title {
+  font-size: 15px;
+  text-align: left;
+  font-family: "QuicksandRegular", sans-serif;
+  font-weight: 1000;
+}
+
+.article-description {
+  font-size: 13px;
+  text-align: left;
+  font-family: "QuicksandRegular", sans-serif;
+}
+
+.article-source {
+  font-size: 12px;
+  text-align: left;
+  font-family: "QuicksandRegular", sans-serif;
+  font-style: italic;
+}
+
+@media (max-width: 600px) {
+  .carousel-item {
+    flex-direction: column;
+    flex: 0 0 100%;
+  }
+
+  .carousel-img,
+  .carousel-content {
+    width: 50%;
+  }
+}
+
+.carousel-item2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #333;
+  color: white;
+  border-radius: 10px;
+  height: 100%;
+  gap: 10px;
+  padding: 14px;
+  width: 100%;
+}
+
+.news-vertical-line {
+  border-left: 1px solid #fff; /* Add line style */
+  height: 2.7em; /* Adjust as needed */
+  margin: auto;
+  width: 1px;
+}
+
+.news-container {
+  margin-top: 8px;
+}
