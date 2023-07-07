@@ -13,6 +13,8 @@ function SearchBar({ className }) {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [suggestionData, setSuggestionData] = useState({});
+  const [selectedSuggestion, setSelectedSuggestion] = useState(null);
 
   const { setCoordinates } = useContext(WeatherDataContext);
 
@@ -33,6 +35,12 @@ function SearchBar({ className }) {
             item.country
           }`
       );
+      const newSuggestionData = data.results.reduce((obj, item, index) => {
+        const suggestion = formattedSuggestions[index];
+        obj[suggestion] = item;
+        return obj;
+      }, {});
+      setSuggestionData(newSuggestionData);
       setSuggestions(formattedSuggestions);
     }
   };
@@ -43,24 +51,33 @@ function SearchBar({ className }) {
   }, [searchQuery]);
 
   const searchWeather = async () => {
-    const response = await fetch("/get-location-data", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ location: searchQuery }),
+    if (!selectedSuggestion) return; // If no suggestion selected, return
+    console.log(selectedSuggestion);
+    const {
+      latitude,
+      longitude,
+      name,
+      country,
+      country_code,
+      admin1,
+      timezone,
+    } = selectedSuggestion;
+
+    setCoordinates({ latitude, longitude });
+
+    // Save the data to Firebase
+    const docRef = doc(db, "locations", searchQuery);
+    await setDoc(docRef, {
+      latitude,
+      longitude,
+      name,
+      country,
+      country_code,
+      admin1,
+      timezone,
     });
-    const data = await response.json();
 
-    if (data.latitude && data.longitude) {
-      setCoordinates({ latitude: data.latitude, longitude: data.longitude });
-
-      // Save the data to Firebase
-      const docRef = doc(db, "locations", searchQuery);
-      await setDoc(docRef, data);
-
-      navigate(`/dashboard`);
-    }
+    navigate(`/dashboard`);
   };
 
   return (
@@ -82,6 +99,7 @@ function SearchBar({ className }) {
                 key={index}
                 onClick={() => {
                   setSearchQuery(suggestion);
+                  setSelectedSuggestion(suggestionData[suggestion]); // Set the selected suggestion data
                   setSuggestions([]);
                 }}
               >
