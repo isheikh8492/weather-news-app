@@ -3,7 +3,7 @@ import Carousel from "react-grid-carousel";
 import axios from "axios";
 import "../css/modules/News.css";
 
-const News = () => {
+const News = ({ coordinates }) => {
   const [newsData, setNewsData] = useState([]);
 
   const fetchNews = async () => {

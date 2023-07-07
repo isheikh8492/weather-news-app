@@ -54,7 +54,10 @@ function App() {
             <div className="app-component">
               <Routes>
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/social" element={<News />} />
+                <Route
+                  path="/social"
+                  element={<News coordinates={coordinates} />}
+                />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </div>

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import SideBar from "./SideBar";
 import { WeatherDataContext } from "../App";
 import TodayTemperatureGraph from "../modules/TodayTemperatureGraph";
 import TodayTemperature from "../modules/TodayTemperature";
@@ -9,6 +8,8 @@ import AirQuality from "../modules/AirQuality";
 import TimeCoordinates from "../modules/TimeCoordinates";
 import "../css/components/Dashboard.css";
 import { getCurrentLocalIndex } from "../utils/Functions";
+import { db } from "../utils/firebase-config";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const Dashboard = () => {
   const { coordinates } = useContext(WeatherDataContext);
@@ -18,24 +19,80 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchWeatherData = async () => {
-      const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,weathercode,surface_pressure,cloudcover,visibility,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&forecast_days=7&timezone=America%2FChicago`
+      const docRef = doc(
+        db,
+        "weatherData",
+        `${coordinates.latitude}_${coordinates.longitude}`
       );
-      const data = await response.json();
-      setWeatherData(data);
+      const docSnap = await getDoc(docRef);
 
-      if (data.hourly?.time) {
-        const currentIndex = getCurrentLocalIndex(data.hourly.time);
+      if (
+        docSnap.exists() &&
+        docSnap.data().date === new Date().toISOString().slice(0, 10) &&
+        docSnap.data().timeIndex ===
+          getCurrentLocalIndex(docSnap.data().data.hourly.time)
+      ) {
+        setWeatherData(docSnap.data().data);
+        const currentIndex = getCurrentLocalIndex(
+          docSnap.data().data.hourly.time
+        );
         setCurrentTimeIndex(currentIndex);
+        console.log("WeatherData read from Firebase");
+      } else {
+        const response = await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,weathercode,surface_pressure,cloudcover,visibility,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&forecast_days=7&timezone=America%2FChicago`
+        );
+        const data = await response.json();
+        setWeatherData(data);
+
+        if (data.hourly?.time) {
+          const currentIndex = getCurrentLocalIndex(data.hourly.time);
+          setCurrentTimeIndex(currentIndex);
+        }
+
+        // Overwrite the existing document with new data in Firestore
+        await setDoc(docRef, {
+          date: new Date().toISOString().slice(0, 10),
+          timeIndex: getCurrentLocalIndex(data.hourly.time),
+          data,
+        });
       }
     };
 
     const fetchAirQualityData = async () => {
-      const response = await fetch(
-        `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone,uv_index&timezone=America%2FChicago`
+      const docRef = doc(
+        db,
+        "airQualityData",
+        `${coordinates.latitude}_${coordinates.longitude}`
       );
-      const data = await response.json();
-      setAirQualityData(data);
+      const docSnap = await getDoc(docRef);
+
+      if (
+        docSnap.exists() &&
+        docSnap.data().date === new Date().toISOString().slice(0, 10) &&
+        docSnap.data().timeIndex ===
+          getCurrentLocalIndex(docSnap.data().data.hourly.time)
+      ) {
+        setAirQualityData(docSnap.data().data);
+        const currentIndex = getCurrentLocalIndex(
+          docSnap.data().data.hourly.time
+        );
+        setCurrentTimeIndex(currentIndex);
+        console.log("AirQuality read from Firebase");
+      } else {
+        const response = await fetch(
+          `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone,uv_index&timezone=America%2FChicago`
+        );
+        const data = await response.json();
+        setAirQualityData(data);
+
+        // Overwrite the existing document with new data in Firestore
+        await setDoc(docRef, {
+          date: new Date().toISOString().slice(0, 10),
+          timeIndex: getCurrentLocalIndex(data.hourly.time),
+          data,
+        });
+      }
     };
 
     fetchWeatherData();
@@ -50,7 +107,7 @@ const Dashboard = () => {
           hourlyData={weatherData?.hourly}
           hourlyDataUnits={weatherData?.hourly_units}
           cityCountry="US"
-          cityName="Chicago"
+          cityName="chicago"
         />
       </div>
       <div className="grid-item item7">
