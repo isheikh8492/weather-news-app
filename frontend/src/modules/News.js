@@ -7,15 +7,26 @@ const News = ({ coordinates }) => {
   const [newsData, setNewsData] = useState([]);
 
   const fetchNews = async () => {
-    const response = await axios.get(
-      `https://newsapi.org/v2/everything?q=chicago%20AND%20weather&sortBy=relevancy,publishedDate&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
-    );
-    return response.data.articles;
+    // check if news data exists in local storage
+    const cachedNewsData = localStorage.getItem("newsData");
+    if (cachedNewsData) {
+      console.log("news data loading from local storage");
+      return JSON.parse(cachedNewsData);
+    } else {
+      // if not, fetch it from API
+      const response = await axios.get(
+        `https://newsapi.org/v2/everything?q=chicago%20AND%20weather&sortBy=relevancy,publishedDate&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
+      );
+      const articles = response.data.articles;
+      // save news data to local storage
+      localStorage.setItem("newsData", JSON.stringify(articles));
+      return articles;
+    }
   };
 
   useEffect(() => {
     fetchNews().then((articles) => {
-      setNewsData(articles.slice(0, 30)); // Fetch first 12 articles
+      setNewsData(articles.slice(0, 30)); // Fetch first 30 articles
     });
   }, []);
 
