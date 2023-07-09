@@ -9,14 +9,14 @@ import styles from "../css/components/SearchBar.module.css"; // Import css modul
 
 let timeout = null;
 
-function SearchBar({ className }) {
+function SearchBar() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionData, setSuggestionData] = useState({});
   const [selectedSuggestion, setSelectedSuggestion] = useState(null);
 
-  const { setCoordinates } = useContext(WeatherDataContext);
+  const { setData } = useContext(WeatherDataContext);
 
   const handleInputChange = (e) => {
     setSearchQuery(e.target.value);
@@ -57,13 +57,21 @@ function SearchBar({ className }) {
       latitude,
       longitude,
       name,
+      admin1,
       country,
       country_code,
-      admin1,
       timezone,
     } = selectedSuggestion;
 
-    setCoordinates({ latitude, longitude });
+    setData({
+      latitude,
+      longitude,
+      name,
+      admin1,
+      country,
+      country_code,
+      timezone,
+    });
 
     // Save the data to Firebase
     const docRef = doc(db, "locations", searchQuery);

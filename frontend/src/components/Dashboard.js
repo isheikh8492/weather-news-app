@@ -12,7 +12,7 @@ import { db } from "../utils/firebase-config";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const Dashboard = () => {
-  const { coordinates } = useContext(WeatherDataContext);
+  const { data } = useContext(WeatherDataContext);
   const [weatherData, setWeatherData] = useState(null);
   const [airQualityData, setAirQualityData] = useState(null);
   const [currentTimeIndex, setCurrentTimeIndex] = useState(-1);
@@ -22,7 +22,7 @@ const Dashboard = () => {
       const docRef = doc(
         db,
         "weatherData",
-        `${coordinates.latitude}_${coordinates.longitude}`
+        `${data.latitude}_${data.longitude}`
       );
       const docSnap = await getDoc(docRef);
 
@@ -40,21 +40,21 @@ const Dashboard = () => {
         console.log("WeatherData read from Firebase");
       } else {
         const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,weathercode,surface_pressure,cloudcover,visibility,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&forecast_days=7&timezone=America%2FChicago`
+          `https://api.open-meteo.com/v1/forecast?latitude=${data.latitude}&longitude=${data.longitude}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,weathercode,surface_pressure,cloudcover,visibility,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&forecast_days=7&timezone=America%2FChicago`
         );
-        const data = await response.json();
-        setWeatherData(data);
+        const newData = await response.json();
+        setWeatherData(newData);
 
-        if (data.hourly?.time) {
-          const currentIndex = getCurrentLocalIndex(data.hourly.time);
+        if (newData.hourly?.time) {
+          const currentIndex = getCurrentLocalIndex(newData.hourly.time);
           setCurrentTimeIndex(currentIndex);
         }
 
         // Overwrite the existing document with new data in Firestore
         await setDoc(docRef, {
           date: new Date().toISOString().slice(0, 10),
-          timeIndex: getCurrentLocalIndex(data.hourly.time),
-          data,
+          timeIndex: getCurrentLocalIndex(newData.hourly.time),
+          data: newData,
         });
       }
     };
@@ -63,7 +63,7 @@ const Dashboard = () => {
       const docRef = doc(
         db,
         "airQualityData",
-        `${coordinates.latitude}_${coordinates.longitude}`
+        `${data.latitude}_${data.longitude}`
       );
       const docSnap = await getDoc(docRef);
 
@@ -81,29 +81,31 @@ const Dashboard = () => {
         console.log("AirQuality read from Firebase");
       } else {
         const response = await fetch(
-          `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&hourly=carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone,uv_index&timezone=America%2FChicago`
+          `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${data.latitude}&longitude=${data.longitude}&hourly=carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone,uv_index&timezone=America%2FChicago`
         );
-        const data = await response.json();
-        setAirQualityData(data);
+        const newData = await response.json();
+        setAirQualityData(newData);
 
         // Overwrite the existing document with new data in Firestore
         await setDoc(docRef, {
           date: new Date().toISOString().slice(0, 10),
-          timeIndex: getCurrentLocalIndex(data.hourly.time),
-          data,
+          timeIndex: getCurrentLocalIndex(newData.hourly.time),
+          data: newData,
         });
       }
     };
 
-    fetchWeatherData();
-    fetchAirQualityData();
-  }, [coordinates]);
+    if (data) {
+      fetchWeatherData();
+      fetchAirQualityData();
+    }
+  }, [data]);
 
   return (
     <div className="grid-container">
       <div className="grid-item item1">
         <CitySummary
-          coordinates={coordinates}
+          data={data}
           hourlyData={weatherData?.hourly}
           hourlyDataUnits={weatherData?.hourly_units}
           cityCountry="US"
@@ -111,12 +113,7 @@ const Dashboard = () => {
         />
       </div>
       <div className="grid-item item7">
-        <TimeCoordinates
-          latitude={coordinates.latitude}
-          longitude={coordinates.longitude}
-          cityName="Chicago"
-          cityCountry="US"
-        />
+        <TimeCoordinates data={data} />
       </div>
       <div className="grid-item item2">
         <TodayTemperatureGraph

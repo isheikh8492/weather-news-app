@@ -3,23 +3,23 @@ import Carousel from "react-grid-carousel";
 import axios from "axios";
 import "../css/modules/News.css";
 
-const News = ({ coordinates }) => {
+const News = ({ data }) => {
   const [newsData, setNewsData] = useState([]);
 
   const fetchNews = async () => {
     // check if news data exists in local storage
-    const cachedNewsData = localStorage.getItem("newsData");
+    const cachedNewsData = localStorage.getItem(`newsData_${data.name}`);
     if (cachedNewsData) {
-      console.log("news data loading from local storage");
+      console.log(`news data for ${data.name} loading from local storage`);
       return JSON.parse(cachedNewsData);
     } else {
       // if not, fetch it from API
       const response = await axios.get(
-        `https://newsapi.org/v2/everything?q=chicago%20AND%20weather&sortBy=relevancy,publishedDate&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
+        `https://newsapi.org/v2/everything?q=${data.name}%20AND%20weather&sortBy=relevancy,publishedDate&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
       );
       const articles = response.data.articles;
       // save news data to local storage
-      localStorage.setItem("newsData", JSON.stringify(articles));
+      localStorage.setItem(`newsData_${data.name}`, JSON.stringify(articles));
       return articles;
     }
   };
@@ -28,7 +28,7 @@ const News = ({ coordinates }) => {
     fetchNews().then((articles) => {
       setNewsData(articles.slice(0, 30)); // Fetch first 30 articles
     });
-  }, []);
+  }, [data]); // <---- put data here
 
   return (
     <div className="news-container">

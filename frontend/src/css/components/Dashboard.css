@@ -4,7 +4,7 @@
   gap: 5px;
   grid-template-columns: 3fr 3fr 2.5fr;
   grid-template-rows: auto auto auto auto;
-  grid-template-areas: 
+  grid-template-areas:
     "item7 item1 item5"
     "item2 item4 item5"
     "item2 item4 item5"
@@ -14,8 +14,6 @@
 }
 
 .grid-item {
-  background: #4CAF50;
-  border: 1px solid rgba(0, 0, 0, 0.8);
   font-size: 30px;
   text-align: center;
 }
