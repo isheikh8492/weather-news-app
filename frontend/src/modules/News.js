@@ -47,20 +47,27 @@ const News = ({ data }) => {
       <Carousel className="carousel" cols={2} rows={3} loop showDots={true}>
         {newsData.map((article, index) => (
           <Carousel.Item className="carousel-item" key={index}>
-            <div className="carousel-item2">
-              <div className="carousel-img">
-                <img src={article.urlToImage} alt={article.title} />
+            <a
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="article-link"
+            >
+              <div className="carousel-item2">
+                <div className="carousel-img">
+                  <img src={article.urlToImage} alt={article.title} />
+                </div>
+                <div className="news-vertical-line" />
+                <div className="carousel-content">
+                  <h3 className="article-title">{article.title}</h3>
+                  <p className="article-source">{article.source.name}</p>
+                  <p className="article-description">{article.description}</p>
+                  <p className="article-published">
+                    {getNewsDate(article.publishedAt)}
+                  </p>
+                </div>
               </div>
-              <div className="news-vertical-line" />
-              <div className="carousel-content">
-                <h3 className="article-title">{article.title}</h3>
-                <p className="article-source">{article.source.name}</p>
-                <p className="article-description">{article.description}</p>
-                <p className="article-published">
-                  {getNewsDate(article.publishedAt)}
-                </p>
-              </div>
-            </div>
+            </a>
           </Carousel.Item>
         ))}
       </Carousel>

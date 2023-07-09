@@ -93,3 +93,14 @@
 .news-container {
   margin-top: 8px;
 }
+
+.article-link {
+  text-decoration: none;
+  color: inherit;
+}
+.article-link:visited {
+  color: inherit;
+}
+.article-link:hover {
+  color: inherit;
+}
