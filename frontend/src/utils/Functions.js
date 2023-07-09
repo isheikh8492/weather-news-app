@@ -235,3 +235,9 @@ export const getCurrentLocalIndex = (timeData) => {
   if (closestTimeIndex === -1) return timeData.length - 1;
   return closestTimeIndex;
 };
+
+export const getNewsDate = (time) => {
+  const moment = require("moment");
+  const date = moment(time);
+  return date.format("MMMM D, YYYY");
+};

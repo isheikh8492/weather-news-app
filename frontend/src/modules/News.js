@@ -2,26 +2,38 @@ import React, { useEffect, useState } from "react";
 import Carousel from "react-grid-carousel";
 import axios from "axios";
 import "../css/modules/News.css";
+import { getNewsDate } from "../utils/Functions";
 
 const News = ({ data }) => {
   const [newsData, setNewsData] = useState([]);
 
   const fetchNews = async () => {
+    const currentDate = new Date().toISOString().split("T")[0]; // Get current date in 'yyyy-mm-dd' format
     // check if news data exists in local storage
     const cachedNewsData = localStorage.getItem(`newsData_${data.name}`);
+
     if (cachedNewsData) {
-      console.log(`news data for ${data.name} loading from local storage`);
-      return JSON.parse(cachedNewsData);
-    } else {
-      // if not, fetch it from API
-      const response = await axios.get(
-        `https://newsapi.org/v2/everything?q=${data.name}%20AND%20weather&sortBy=relevancy,publishedDate&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
-      );
-      const articles = response.data.articles;
-      // save news data to local storage
-      localStorage.setItem(`newsData_${data.name}`, JSON.stringify(articles));
-      return articles;
+      const { date, articles } = JSON.parse(cachedNewsData);
+      // Check if the date stored in local storage matches the current date
+      if (date === currentDate) {
+        console.log(`news data for ${data.name} loading from local storage`);
+        return articles;
+      }
     }
+
+    // Fetch news data from API if it doesn't exist in local storage or is outdated
+    const response = await axios.get(
+      `https://newsapi.org/v2/everything?q=${data.name}%20AND%20weather&sortBy=publishedDate&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
+    );
+
+    const articles = response.data.articles;
+    // save news data to local storage with the current date
+    localStorage.setItem(
+      `newsData_${data.name}`,
+      JSON.stringify({ date: currentDate, articles })
+    );
+
+    return articles;
   };
 
   useEffect(() => {
@@ -44,6 +56,9 @@ const News = ({ data }) => {
                 <h3 className="article-title">{article.title}</h3>
                 <p className="article-source">{article.source.name}</p>
                 <p className="article-description">{article.description}</p>
+                <p className="article-published">
+                  {getNewsDate(article.publishedAt)}
+                </p>
               </div>
             </div>
           </Carousel.Item>
