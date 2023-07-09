@@ -61,7 +61,12 @@ const News = ({ data }) => {
                 <div className="carousel-content">
                   <h3 className="article-title">{article.title}</h3>
                   <p className="article-source">{article.source.name}</p>
-                  <p className="article-description">{article.description}</p>
+                  <p className="article-description">
+                    {article.description.length > 100
+                      ? article.description.substring(0, 170) + "..."
+                      : article.description}
+                  </p>
+
                   <p className="article-published">
                     {getNewsDate(article.publishedAt)}
                   </p>
