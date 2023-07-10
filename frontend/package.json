@@ -22,6 +22,8 @@
     "firebase": "^9.23.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.43",
+    "net": "^1.0.2",
+    "node-polyfill-webpack-plugin": "^2.0.1",
     "openai": "^3.3.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
@@ -64,5 +66,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "browser": {
+    "tls": false,
+    "net": false,
+    "fs": false
   }
 }

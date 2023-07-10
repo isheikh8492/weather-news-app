@@ -1,23 +1,88 @@
 import React, { useState, useEffect } from "react";
 import "../css/components/Settings.css";
-import { doc, setDoc } from "firebase/firestore"; // Import firebase functions
-import { db } from "../utils/firebase-config"; // Import your Firebase config
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { db } from "../utils/firebase-config";
 
 let timeout = null;
+
+const sendMessage = async (to, body) => {
+  const response = await fetch("http://localhost:5000/send-sms", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ phoneNumber: to, message: body }),
+  });
+  const data = await response.json();
+  console.log(data);
+};
 
 const Settings = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [city, setCity] = useState("");
-  const [state, setState] = useState("");
   const [theme, setTheme] = useState("Light");
   const [temperatureUnit, setTemperatureUnit] = useState("Celsius");
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionData, setSuggestionData] = useState({});
   const [selectedSuggestion, setSelectedSuggestion] = useState(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(phoneNumber, city, state, theme, temperatureUnit);
+
+    // Use phone number as document ID
+    const docRef = doc(db, "users", phoneNumber);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      // Document with this phone number already exists
+      const userData = docSnap.data();
+
+      if (userData.city === selectedSuggestion.name) {
+        // The city matches, so do nothing
+        console.log(
+          `User with phone number ${phoneNumber} already registered with city ${selectedSuggestion.name}`
+        );
+      } else {
+        // The city does not match, so update the existing document
+        console.log(
+          `Updating user ${phoneNumber} from city ${userData.city} to city ${selectedSuggestion.name}`
+        );
+        await setDoc(
+          docRef,
+          {
+            phoneNumber: phoneNumber,
+            name: selectedSuggestion.name,
+            admin1: selectedSuggestion.admin1,
+            country: selectedSuggestion.country,
+            country_code: selectedSuggestion.country_code,
+            timezone: selectedSuggestion.timezone,
+            latitude: selectedSuggestion.latitude,
+            longitude: selectedSuggestion.longitude,
+          },
+          { merge: true }
+        );
+      }
+    } else {
+      // Document with this phone number does not exist, so create a new one
+      console.log(
+        `Registering new user with phone number ${phoneNumber} and city ${selectedSuggestion.name}`
+      );
+      await setDoc(docRef, {
+        phoneNumber: phoneNumber,
+        name: selectedSuggestion.name,
+        admin1: selectedSuggestion.admin1,
+        country: selectedSuggestion.country,
+        country_code: selectedSuggestion.country_code,
+        timezone: selectedSuggestion.timezone,
+        latitude: selectedSuggestion.latitude,
+        longitude: selectedSuggestion.longitude,
+      });
+
+      // After storing the user data, send a test SMS
+      const message =
+        "You have subscribed to our weather notification service!";
+      await sendMessage(phoneNumber, message);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -115,6 +180,7 @@ const Settings = () => {
             <button className="settings-submit" type="submit">
               Save
             </button>
+            <span className="unsubscribe-text">Unsubscribe from list</span>
           </form>
         </div>
         <div className="vertical-line"></div>

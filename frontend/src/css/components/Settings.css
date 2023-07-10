@@ -226,3 +226,10 @@
   flex-grow: 0; /* prevent label from growing */
   flex-shrink: 0; /* prevent label from shrinking */
 }
+
+.unsubscribe-text {
+  font-size: 17px;
+  padding-left: 15%;
+  font-weight: 700;
+  text-decoration: underline;
+}
