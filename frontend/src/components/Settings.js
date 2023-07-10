@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../css/components/Settings.css";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../utils/firebase-config";
+import Modal from "react-modal";
 
 let timeout = null;
 
@@ -34,6 +35,8 @@ const Settings = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionData, setSuggestionData] = useState({});
   const [selectedSuggestion, setSelectedSuggestion] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [unsubPhoneNumber, setUnsubPhoneNumber] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -133,6 +136,24 @@ const Settings = () => {
     }
   };
 
+  const handleUnsubscribe = async () => {
+    const phoneNumberToDelete = unsubPhoneNumber;
+
+    // Create a reference to the user document
+    const userDoc = doc(db, "users", phoneNumberToDelete);
+
+    try {
+      // Delete the document
+      await deleteDoc(userDoc);
+      console.log(`Deleted user ${phoneNumberToDelete}`);
+    } catch (error) {
+      console.error(`Failed to delete user: ${error}`);
+    }
+
+    // Close the modal
+    setModalIsOpen(false);
+  };
+
   useEffect(() => {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => fetchSuggestions(city), 500);
@@ -201,7 +222,12 @@ const Settings = () => {
             <button className="settings-submit" type="submit">
               Save
             </button>
-            <span className="unsubscribe-text">Unsubscribe from list</span>
+            <span
+              className="unsubscribe-text"
+              onClick={() => setModalIsOpen(true)}
+            >
+              Unsubscribe from list
+            </span>
           </form>
         </div>
         <div className="vertical-line"></div>
@@ -230,6 +256,55 @@ const Settings = () => {
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        contentLabel="Unsubscribe Modal"
+        style={{
+          overlay: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            position: "relative",
+            width: "50%",
+            border: "1px solid #ccc",
+            background: "#333",
+            overflow: "auto",
+            WebkitOverflowScrolling: "touch",
+            borderRadius: "10px",
+            outline: "none",
+            padding: "20px",
+          },
+        }}
+      >
+        <h2 style={{ padding: "2px", margin: "2px", color: "white" }}>
+          Unsubscribe
+        </h2>
+        <p style={{ padding: "2px", margin: "3px", color: "white" }}>
+          Please enter the phone number to unsubscribe:
+        </p>
+        <input
+          style={{ borderRadius: "5px", padding: "2px", margin: "5px" }}
+          type="tel"
+          value={unsubPhoneNumber}
+          onChange={(e) => setUnsubPhoneNumber(e.target.value)}
+          required
+        />
+        <button
+          style={{ borderRadius: "5px", padding: "2px", margin: "5px" }}
+          onClick={handleUnsubscribe}
+        >
+          Unsubscribe
+        </button>
+        <button
+          style={{ borderRadius: "5px", padding: "2px", margin: "5px" }}
+          onClick={() => setModalIsOpen(false)}
+        >
+          Cancel
+        </button>
+      </Modal>
     </div>
   );
 };
