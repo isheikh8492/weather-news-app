@@ -1,10 +1,18 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from os import environ
 import requests
+from twilio.rest import Client
+from os import environ
+from dotenv import load_dotenv
+
 
 app = Flask(__name__)
 CORS(app)
+load_dotenv()
+
+client = Client(
+    environ.get("FLASK_TWILIO_ACCOUNT_SID"), environ.get("FLASK_TWILIO_AUTH_TOKEN")
+)
 
 
 @app.route("/api/hello", methods=["GET"])
@@ -46,6 +54,23 @@ def get_dashboard_data():
     # Here you can use latitude and longitude to fetch additional data like weather, air quality, etc.
     # For the purpose of this example, I'll just return them as is.
     return jsonify({"latitude": latitude, "longitude": longitude})
+
+
+@app.route("/send-sms", methods=["POST"])
+def send_sms():
+    data = request.get_json()
+    phone_number = data.get("phoneNumber")
+    message = data.get("message")
+
+    print(environ.get("FLASK_TWILIO_PHONE_NUMBER"))
+    print(environ.get("FLASK_TWILIO_ACCOUNT_SID"))
+    print(environ.get("FLASK_TWILIO_AUTH_TOKEN"))
+
+    message = client.messages.create(
+        body=message, from_=environ.get("FLASK_TWILIO_PHONE_NUMBER"), to=phone_number
+    )
+
+    return jsonify({"status": "success", "message_sid": message.sid})
 
 
 if __name__ == "__main__":

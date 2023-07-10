@@ -20,10 +20,14 @@ import Settings from "./components/Settings";
 export const WeatherDataContext = createContext();
 
 function App() {
-  // const [weatherData, setWeatherData] = useState(null);
-  const [coordinates, setCoordinates] = useState({
+  const [data, setData] = useState({
     latitude: null,
     longitude: null,
+    name: null,
+    admin1: null,
+    country: null,
+    country_code: null,
+    timezone: null,
   });
   const [error, setError] = useState(null);
 
@@ -31,7 +35,7 @@ function App() {
   const isHomePage = location.pathname === "/";
 
   return (
-    <WeatherDataContext.Provider value={{ coordinates, setCoordinates }}>
+    <WeatherDataContext.Provider value={{ data, setData }}>
       <div className="App">
         <div className="app-header">
           <Header />
@@ -53,8 +57,8 @@ function App() {
             </div>
             <div className="app-component">
               <Routes>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/social" element={<News />} />
+                <Route path="/dashboard" element={<Dashboard data={data} />} />
+                <Route path="/social" element={<News data={data} />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </div>

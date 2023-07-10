@@ -180,8 +180,8 @@ export const getWeatherIcon = async (weathercode) => {
 export const convertDate = (time) => {
   const date = new Date(time);
   const options = {
-    day: "2-digit",
     month: "2-digit",
+    day: "2-digit",
     year: "numeric",
   };
   const strDate = date.toLocaleDateString("en-GB", options);
@@ -206,10 +206,8 @@ export const convertGraphTime = (time) => {
 };
 
 export const convertLocalTime = (time) => {
-  const date = new Date(time);
-
-  let hours = date.getHours();
-  const minutes = date.getMinutes();
+  let hours = time.hours();
+  const minutes = time.minutes();
   const ampm = hours >= 12 ? "PM" : "AM";
   hours %= 12;
   hours = hours ? (hours < 10 ? ` ${hours}` : hours) : 12; // the hour '0' should be '12'
@@ -218,17 +216,12 @@ export const convertLocalTime = (time) => {
   return `${hours}:${minutesStr} ${ampm}`;
 };
 
-export const formatDate = (date) => {
+export const formatDate = (time) => {
   const suffixes = ["th", "st", "nd", "rd"];
-  const day = date.getDate();
+  const day = time.date();
   const relevantDigits = day < 30 ? day % 20 : day % 30;
   const suffix = relevantDigits <= 3 ? suffixes[relevantDigits] : suffixes[0];
-  return `${date.toLocaleDateString("en-US", {
-    weekday: "long",
-  })}, ${day}${suffix} ${date.toLocaleDateString("en-US", {
-    month: "long",
-    year: "numeric",
-  })}`;
+  return `${time.format("dddd")}, ${day}${suffix} ${time.format("MMMM YYYY")}`;
 };
 
 export const roundTemperature = (temperature) => {
@@ -241,4 +234,10 @@ export const getCurrentLocalIndex = (timeData) => {
   const closestTimeIndex = timeData.findIndex((time) => time >= localDateTime);
   if (closestTimeIndex === -1) return timeData.length - 1;
   return closestTimeIndex;
+};
+
+export const getNewsDate = (time) => {
+  const moment = require("moment");
+  const date = moment(time);
+  return date.format("MMMM D, YYYY");
 };

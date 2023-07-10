@@ -20,6 +20,7 @@
   height: 100%;
   width: 100%;
   object-fit: contain;
+  max-height: 185px;
 }
 
 .carousel-content {
@@ -50,6 +51,14 @@
   font-style: italic;
 }
 
+.article-published {
+  font-size: 12px;
+  text-align: right;
+  font-family: "QuicksandRegular", sans-serif;
+  font-style: italic;
+  padding: 0px;
+}
+
 @media (max-width: 600px) {
   .carousel-item {
     flex-direction: column;
@@ -71,7 +80,7 @@
   border-radius: 10px;
   height: 100%;
   gap: 10px;
-  padding: 14px;
+  padding: 14px 14px 0 14px;
   width: 100%;
 }
 
@@ -84,4 +93,15 @@
 
 .news-container {
   margin-top: 8px;
+}
+
+.article-link {
+  text-decoration: none;
+  color: inherit;
+}
+.article-link:visited {
+  color: inherit;
+}
+.article-link:hover {
+  color: inherit;
 }

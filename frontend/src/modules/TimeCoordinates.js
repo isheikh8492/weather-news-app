@@ -1,32 +1,36 @@
 import React, { useState, useEffect } from "react";
 import "../css/modules/TimeCoordinates.css";
 import { convertLocalTime, formatDate } from "../utils/Functions";
+import moment from "moment-timezone";
 
-const TimeCoordinates = ({ latitude, longitude, cityName, cityCountry }) => {
-  const [time, setTime] = useState(new Date());
+const TimeCoordinates = ({ data }) => {
+  const [time, setTime] = useState(moment.tz(data.timezone));
 
   useEffect(() => {
-    const timerID = setInterval(() => tick(), 1000); // update time every 1 minute
+    const timerID = setInterval(() => tick(), 1000); // update time every 1 second
     return function cleanup() {
       clearInterval(timerID);
     };
-  }, []);
+  }, [data.timezone]);
 
   const tick = () => {
-    setTime(new Date());
+    setTime(moment.tz(data.timezone));
   };
+
   return (
     <div className="summary-container">
       <div className="clockBox">
         <div className="location">
-          <span className="city b">
-            {cityName}, {cityCountry}
+          <span className="city b locationSpan">
+            {data.name}, {data.admin1},
           </span>
           <br />
+          <span className="city b locationSpan">{data.country}</span>
+          <br />
           <div className="coords">
-            <span>Lat: {latitude}</span>
+            <span>Lat: {data.latitude}</span>
             <br />
-            <span>Lon: {longitude}</span>
+            <span>Lon: {data.longitude}</span>
           </div>
         </div>
         <div className="vertical-line" />
