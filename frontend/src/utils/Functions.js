@@ -180,8 +180,8 @@ export const getWeatherIcon = async (weathercode) => {
 export const convertDate = (time) => {
   const date = new Date(time);
   const options = {
-    day: "2-digit",
     month: "2-digit",
+    day: "2-digit",
     year: "numeric",
   };
   const strDate = date.toLocaleDateString("en-GB", options);
