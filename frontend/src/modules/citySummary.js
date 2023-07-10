@@ -20,9 +20,9 @@ const CitySummary = ({ data, hourlyData, hourlyDataUnits }) => {
       prompt: `${hourlyData}\n\n${hourlyDataUnits}\n\nReturn a summary of the weather in ${
         data.name
       }, ${data.admin1 ? data.admin1 + ", " : ""}, ${data.country}
-        situated at coordinates(${
-          (data.latitude, data.longitude)
-        }) in 3 sentences, NO MORE THAN THAT. Use the data provided above to write the summary.
+        situated at coordinates(${data.latitude}, ${
+        data.longitude
+      }) in 3 sentences, NO MORE THAN THAT. Use the data provided above to write the summary.
         The summary should start with "The weather in ${data.name}, ${
         data.admin1 ? data.admin1 + ", " : ""
       }${data.country} is". You should also include the state or province
@@ -37,7 +37,7 @@ const CitySummary = ({ data, hourlyData, hourlyDataUnits }) => {
     const summary = response.data.choices[0].text;
 
     // Save the data to Firebase
-    const docRef = doc(db, "summaries", `${data.latitude}-${data.longitude}`);
+    const docRef = doc(db, "summaries", `${data.latitude}_${data.longitude}`);
     await setDoc(docRef, {
       name: data.name,
       admin1: data.admin1,
@@ -53,7 +53,7 @@ const CitySummary = ({ data, hourlyData, hourlyDataUnits }) => {
 
   useEffect(() => {
     const checkSummary = async () => {
-      const docRef = doc(db, "summaries", `${data.latitude}-${data.longitude}`);
+      const docRef = doc(db, "summaries", `${data.latitude}_${data.longitude}`);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {

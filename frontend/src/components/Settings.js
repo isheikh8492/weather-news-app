@@ -6,15 +6,24 @@ import { db } from "../utils/firebase-config";
 let timeout = null;
 
 const sendMessage = async (to, body) => {
-  const response = await fetch("http://localhost:5000/send-sms", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ phoneNumber: to, message: body }),
-  });
-  const data = await response.json();
-  console.log(data);
+  try {
+    const response = await fetch("/send-sms", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ phoneNumber: to, message: body }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error("Failed to send message:", error);
+  }
 };
 
 const Settings = () => {
@@ -76,6 +85,17 @@ const Settings = () => {
         timezone: selectedSuggestion.timezone,
         latitude: selectedSuggestion.latitude,
         longitude: selectedSuggestion.longitude,
+      });
+
+      const docRef = doc(db, "locations", city);
+      await setDoc(docRef, {
+        latitude: selectedSuggestion.latitude,
+        longitude: selectedSuggestion.longitude,
+        name: selectedSuggestion.name,
+        country: selectedSuggestion.country,
+        country_code: selectedSuggestion.country_code,
+        admin1: selectedSuggestion.admin1,
+        timezone: selectedSuggestion.timezone,
       });
 
       // After storing the user data, send a test SMS

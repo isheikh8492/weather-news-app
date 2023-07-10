@@ -40,7 +40,7 @@ const Dashboard = () => {
         console.log("WeatherData read from Firebase");
       } else {
         const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${data.latitude}&longitude=${data.longitude}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,weathercode,surface_pressure,cloudcover,visibility,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&forecast_days=7&timezone=America%2FChicago`
+          `https://api.open-meteo.com/v1/forecast?latitude=${data.latitude}&longitude=${data.longitude}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,weathercode,surface_pressure,cloudcover,visibility,windspeed_10m,winddirection_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&forecast_days=7&timezone=${data.timezone}`
         );
         const newData = await response.json();
         setWeatherData(newData);
@@ -81,7 +81,7 @@ const Dashboard = () => {
         console.log("AirQuality read from Firebase");
       } else {
         const response = await fetch(
-          `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${data.latitude}&longitude=${data.longitude}&hourly=carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone,uv_index&timezone=America%2FChicago`
+          `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${data.latitude}&longitude=${data.longitude}&hourly=carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone,uv_index&timezone=${data.timezone}`
         );
         const newData = await response.json();
         setAirQualityData(newData);
