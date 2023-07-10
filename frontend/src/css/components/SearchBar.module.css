@@ -1,0 +1,28 @@
+/* SearchBar.module.css */
+
+.searchBarContainer {
+  position: relative;
+}
+
+.inputWithSuggestions {
+  position: relative;
+}
+
+.suggestionList {
+  position: absolute;
+  width: 100%;
+  background-color: white;
+  border-radius: 4px;
+  z-index: 10; /* Make the suggestions appear over other elements */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); /* Optional: Add some shadow for better separation from underlying content */
+}
+
+.suggestion {
+  padding: 10px;
+  cursor: pointer;
+  text-align: left; /* Align text to left */
+}
+
+.suggestion:hover {
+  background-color: #ddd; /* Change color on hover */
+}

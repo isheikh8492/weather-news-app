@@ -1,12 +1,13 @@
 .sidebar {
   position: relative; /* Fixes the sidebar on the screen */
-  height: 100%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   padding: 5px;
   border-right: 1px solid #ccc;
   background-color: #333;
   border-radius: 10px;
+  align-self: center;
 }
 .sidebar-item {
   display: flex;
@@ -31,4 +32,10 @@
 
 .sidebar-item:last-child {
   margin-bottom: 0;
+}
+
+.sidebar-container {
+  display: flex;
+  align-items: center;
+  height: 100%; /* Takes the full viewport height */
 }

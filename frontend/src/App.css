@@ -6,6 +6,7 @@
   height: 100%;
   display: grid;
   grid-template-rows: 0.1fr 11fr;
+  font-family: "QuicksandRegular", sans-serif;
   /* overflow: hidden; */
 }
 
