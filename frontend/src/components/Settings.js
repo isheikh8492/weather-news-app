@@ -76,6 +76,7 @@ const Settings = () => {
       console.log(
         `Registering new user with phone number ${phoneNumber} and city ${selectedSuggestion.name}`
       );
+
       await setDoc(docRef, {
         phoneNumber: phoneNumber,
         name: selectedSuggestion.name,
@@ -87,8 +88,8 @@ const Settings = () => {
         longitude: selectedSuggestion.longitude,
       });
 
-      const docRef = doc(db, "locations", city);
-      await setDoc(docRef, {
+      const locationsRef = doc(db, "locations", city);
+      await setDoc(locationsRef, {
         latitude: selectedSuggestion.latitude,
         longitude: selectedSuggestion.longitude,
         name: selectedSuggestion.name,
