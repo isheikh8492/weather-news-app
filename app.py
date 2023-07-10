@@ -1,18 +1,27 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import requests
 from twilio.rest import Client
-from os import environ
+import os
 from dotenv import load_dotenv
+import os
 
-
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./frontend/build")
 CORS(app)
 load_dotenv()
 
 client = Client(
-    environ.get("FLASK_TWILIO_ACCOUNT_SID"), environ.get("FLASK_TWILIO_AUTH_TOKEN")
+    os.getenv("FLASK_TWILIO_ACCOUNT_SID"), os.getenv("FLASK_TWILIO_AUTH_TOKEN")
 )
+
+
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + "/" + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, "index.html")
 
 
 @app.route("/api/hello", methods=["GET"])
@@ -30,7 +39,7 @@ def get_weather():
 def get_location_data():
     data = request.get_json()
     location = data.get("location")
-    MAPBOX_TOKEN = environ.get("FLASK_MAPBOX_TOKEN")
+    MAPBOX_TOKEN = os.getenv("FLASK_MAPBOX_TOKEN")
     url = (
         "https://api.mapbox.com/geocoding/v5/mapbox.places/"
         + location
@@ -62,12 +71,8 @@ def send_sms():
     phone_number = data.get("phoneNumber")
     message = data.get("message")
 
-    print(environ.get("FLASK_TWILIO_PHONE_NUMBER"))
-    print(environ.get("FLASK_TWILIO_ACCOUNT_SID"))
-    print(environ.get("FLASK_TWILIO_AUTH_TOKEN"))
-
     message = client.messages.create(
-        body=message, from_=environ.get("FLASK_TWILIO_PHONE_NUMBER"), to=phone_number
+        body=message, from_=os.getenv("FLASK_TWILIO_PHONE_NUMBER"), to=phone_number
     )
 
     return jsonify({"status": "success", "message_sid": message.sid})
