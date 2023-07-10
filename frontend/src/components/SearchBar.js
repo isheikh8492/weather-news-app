@@ -3,7 +3,7 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { WeatherDataContext } from "../App"; // Import WeatherDataContext
-import { doc, getDoc, setDoc } from "firebase/firestore"; // Import firebase functions
+import { doc, setDoc } from "firebase/firestore"; // Import firebase functions
 import { db } from "../utils/firebase-config"; // Import your Firebase config
 import styles from "../css/components/SearchBar.module.css"; // Import css modules stylesheet as styles
 
