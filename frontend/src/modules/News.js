@@ -12,14 +12,14 @@ const News = ({ data }) => {
     // check if news data exists in local storage
     const cachedNewsData = localStorage.getItem(`newsData_${data.name}`);
 
-    // if (cachedNewsData) {
-    //   const { date, articles } = JSON.parse(cachedNewsData);
-    //   // Check if the date stored in local storage matches the current date
-    //   if (date === currentDate) {
-    //     console.log(`news data for ${data.name} loading from local storage`);
-    //     return articles;
-    //   }
-    // }
+    if (cachedNewsData) {
+      const { date, articles } = JSON.parse(cachedNewsData);
+      // Check if the date stored in local storage matches the current date
+      if (date === currentDate) {
+        console.log(`news data for ${data.name} loading from local storage`);
+        return articles;
+      }
+    }
 
     const response = await fetch("/get-news", {
       method: "POST",
