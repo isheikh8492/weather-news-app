@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 import os
 
-app = Flask(__name__, static_folder="./frontend/build")
+app = Flask(__name__, static_folder="./frontend/public")
 CORS(app)
 load_dotenv()
 
