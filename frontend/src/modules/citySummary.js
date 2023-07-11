@@ -22,7 +22,7 @@ const CitySummary = ({ data, hourlyData, hourlyDataUnits }) => {
       }, ${data.admin1 ? data.admin1 + ", " : ""}, ${data.country}
         situated at coordinates(${data.latitude}, ${
         data.longitude
-      }) in 3 sentences, NO MORE THAN THAT. Use the data provided above to write the summary.
+      }) in 2.5 sentences, NO MORE THAN THAT. Use the data provided above to write the summary.
         The summary should start with "The weather in ${data.name}, ${
         data.admin1 ? data.admin1 + ", " : ""
       }${data.country} is". You should also include the state or province
