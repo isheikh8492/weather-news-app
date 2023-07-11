@@ -95,5 +95,14 @@ def get_news():
     return jsonify(articles)
 
 
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory(
+        os.path.join(app.root_path, "frontend", "build"),
+        "favicon.ico",
+        mimetype="image/vnd.microsoft.icon",
+    )
+
+
 if __name__ == "__main__":
     app.run(port=5000)
