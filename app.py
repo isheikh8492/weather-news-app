@@ -79,5 +79,21 @@ def send_sms():
     return jsonify({"status": "success", "message_sid": message.sid})
 
 
+@app.route("/get-news", methods=["POST"])
+def get_news():
+    data = request.get_json()
+    location_name = data.get("name")
+
+    NEWS_API_KEY = os.getenv("FLASK_NEWS_API_KEY")
+
+    response = requests.get(
+        f"https://newsapi.org/v2/everything?q={location_name}%20AND%20weather&sortBy=publishedDate&apiKey={NEWS_API_KEY}"
+    )
+
+    articles = response.json().get("articles", [])
+
+    return jsonify(articles)
+
+
 if __name__ == "__main__":
     app.run(port=5000)
