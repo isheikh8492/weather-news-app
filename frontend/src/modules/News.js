@@ -22,8 +22,9 @@ const News = ({ data }) => {
     }
 
     // Fetch news data from API if it doesn't exist in local storage or is outdated
-    const response = await axios.get(
-      `https://newsapi.org/v2/everything?q=${data.name}%20AND%20weather&sortBy=publishedDate&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`
+    const response = await axios.post(
+      "/get-news", // Change this to the actual URL of your Flask application if they are not running on the same domain
+      { name: data.name }
     );
 
     const articles = response.data.articles;
