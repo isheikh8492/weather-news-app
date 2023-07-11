@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "front": "cd ./frontend && npm start",
     "start": "gunicorn app:app",
-    "install": "pip install -r requirements.txt && cd ./frontend && npm install",
+    "install": "pip install -r requirements.txt && cd ./frontend && npm install --legacy-peer-deps",
     "postinstall": "cd ./frontend && npm run build"
   },
   "author": "",
