@@ -21,13 +21,19 @@ const News = ({ data }) => {
       }
     }
 
-    // Fetch news data from API if it doesn't exist in local storage or is outdated
-    const response = await axios.post(
-      "/get-news", // Change this to the actual URL of your Flask application if they are not running on the same domain
-      { name: data.name }
-    );
+    const response = await fetch("/get-news", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: data.name }),
+    });
 
-    const articles = response.data.articles;
+    const articles = await response.json();
+    // console.log(news_response);
+
+    // const articles = news_response.data.articles;
+    console.log(articles);
     // save news data to local storage with the current date
     localStorage.setItem(
       `newsData_${data.name}`,
